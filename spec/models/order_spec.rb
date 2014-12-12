@@ -70,4 +70,18 @@ describe Order do
       it { expect(subject).to eq(false) }
     end
   end
+
+  describe '#is_valid_transition?' do
+    let(:order) { build(:order) }
+
+    context 'is valid from `DRAFT` to `PLACED`' do
+      subject { order.is_valid_transition?('draft', 'placed') }
+      it { expect(subject).to eq(true) }
+    end
+
+    context 'is invalid from `DRAFT` to `PAID`' do
+      subject { order.is_valid_transition?('draft', 'paid') }
+      it { expect(subject).to eq(false) }
+    end
+  end
 end
